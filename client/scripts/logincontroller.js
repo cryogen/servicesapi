@@ -14,10 +14,9 @@ angular.module('services').controller('LoginController', function($scope, $http,
             }
             else {
                 $scope.errorMessage = undefined;
+                $localStorage.token = res.token;
+                $location.path('/account/' + res.id);
             }
-
-            $localStorage.token = res.token;
-            $location.path('/account/' + res.id);
         });
     };
 });

@@ -62,6 +62,8 @@ function ensureAuthorised(req, res, next) {
         var bearer = bearerHeader.split(' ');
         bearerToken = bearer[1];
         req.token = bearerToken;
+
+        console.info(req.token);
         next();
     }
     else {
