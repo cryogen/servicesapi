@@ -4,8 +4,9 @@ var restify = require('restify');
 var pg = require('pg');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
+var fs = require('fs');
 
-var conString = 'postgres://postgres:postgres@localhost/postgres';
+var conString = 'postgres://ircservices:ircservices@localhost/ircservices';
 
 function sendQuery(query, params, callback) {
     pg.connect(conString, function(err, client, done) {
@@ -35,7 +36,7 @@ function authenticate(req, res, next) {
                                 }
                                 var shasum = crypto.createHash('sha1');
                                 shasum.update(req.body.password + result[0].salt);
-                                if(shasum.digest('hex') !== result[0].password) {
+                                if(shasum.digest('hex').toUpperCase() !== result[0].password.toUpperCase) {
                                     res.json({ error: 'Invalid username/password' });
                                     next();
                                     return;
@@ -102,10 +103,36 @@ var server = restify.createServer();
 server.use(restify.bodyParser());
 server.post('/authenticate/', authenticate);
 server.get('/account/:id', ensureAuthorised, accountGet);
-server.get('\/.*', restify.serveStatic({
+server.get('\/content/.*', restify.serveStatic({
     'directory': './client',
     'default': 'index.html'
 }));
+server.get('\/scripts/.*', restify.serveStatic({
+    'directory': './client',
+    'default': 'index.html'
+}));
+server.get('\/.*.html', restify.serveStatic({
+    'directory': './client',
+    'default': 'index.html'
+}));
+server.get('\/.*', function(req, res) {
+    // XXX If i cant find a better way to do this im totally switching to
+    // express
+    fs.readFile('./client/index.html', 'utf8', function(err, file) {
+    if (err) {
+      res.send(500);
+      return next();
+    }
+ 
+    res.writeHead(200, {
+      'Content-Length': Buffer.byteLength(file),
+      'Content-Type': 'text/html'
+    });
+    res.write(file);
+    res.end();
+    return next();
+  });
+});
 
 server.listen(8080, function() {
     console.log('%s listening at %s', server.name, server.url);
