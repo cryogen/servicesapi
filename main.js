@@ -42,7 +42,7 @@ function authenticate(req, res, next) {
                                 }
 
                                 var nickname = {
-                                    id: result[0].id,
+                                    id: result[0].id + '',
                                     nickname: result[0].nick,
                                     email: result[0].email
                                  };
@@ -58,13 +58,21 @@ function authenticate(req, res, next) {
 function ensureAuthorised(req, res, next) {
     var bearerToken;
     var bearerHeader = req.headers.authorization;
+
     if (typeof bearerHeader !== 'undefined') {
         var bearer = bearerHeader.split(' ');
         bearerToken = bearer[1];
-        req.token = bearerToken;
 
-        console.info(req.token);
-        next();
+        jwt.verify(bearerToken, 'reallysecret', function(err, decoded) {
+            if(err) {
+                res.send(403);
+                return;
+            }
+
+            req.token = bearerToken;
+            req.authObject = decoded;
+            next();
+        });
     }
     else {
         res.send(403);
@@ -72,8 +80,22 @@ function ensureAuthorised(req, res, next) {
 }
 
 function accountGet(req, res, next) {
-    res.send('hi');
-    next();
+    if(!req.authObject) {
+        console.warn('no auth object');
+        res.send(403);
+        return;
+    }
+
+    if(req.params.id !== req.authObject.id) {
+        console.warn('ids didnt match : "' + req.params.id + '"' + ' "' + req.authObject.id + '"');
+        res.send(403);
+        return;
+    }
+
+    sendQuery('SELECT email, cloak, last_host as lastHost, last_quit_msg as lastQuitMessage, last_realname as lastRealname, reg_time as regTime FROM account WHERE id = $1', [req.params.id], function(result) {
+        res.json(result[0]);
+        next();
+    });
 }
 
 var server = restify.createServer();

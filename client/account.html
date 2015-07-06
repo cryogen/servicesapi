@@ -1,1 +1,14 @@
-hello account page
+<dl>
+    <dt>E-mail Address:</dt>
+    <dd>{{ account.email }}</dd>
+    <dt>Cloak:</dt>
+    <dd>{{ account.cloak }}</dd>
+    <dt>Last Host:</dt>
+    <dd>{{ account.lasthost }}</dd>
+    <dt>Last Quit Message:</dt>
+    <dd>{{ account.lastquitmessage }}</dd>
+    <dt>Last Real Name</dt>
+    <dd>{{ account.lastrealname }}</dd>
+    <dt>Registered:</dt>
+    <dd>{{ account.regtime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' }}</dd>
+</dl>
