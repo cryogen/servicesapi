@@ -1,0 +1,25 @@
+{
+    "name": "services-api",
+    "version": "0.0.1",
+    "description": "App for interacting with the oftc irc services database",
+    "author": "Stuart Walsh <stu@ipng.org.uk>",
+    "scripts": {
+        "start": "node main.js"
+    },
+    "main": "main.js",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/cryogen/servicesapi"
+    },
+    "dependencies": {
+        "restify": "*",
+        "pg": "*",
+        "jsonwebtoken": "*",
+        "jquery": "*",
+        "angular": "*",
+        "angular-route": "*",
+        "angular-resource": "*",
+        "ngstorage": "*"
+    },
+    "license": "MIT"
+}
