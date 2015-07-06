@@ -3,7 +3,7 @@
 'use strict';
 
 angular.module('services').controller('AccountController', function($scope, $http, $routeParams) {
-    $http.get('/account/' + $routeParams.id).success(function(data, status) {
+    $http.get('/api/account/' + $routeParams.id).success(function(data) {
         $scope.account = data;
     });
 });

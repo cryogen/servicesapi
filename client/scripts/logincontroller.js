@@ -4,7 +4,7 @@
 
 angular.module('services').controller('LoginController', function($scope, $http, $localStorage, $location) {
     $scope.authenticate = function() {
-        $http.post('/authenticate', {
+        $http.post('/api/authenticate', {
             nickname: $scope.nickname,
             password: $scope.password
         })

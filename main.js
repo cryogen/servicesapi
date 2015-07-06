@@ -102,8 +102,8 @@ function accountGet(req, res, next) {
 
 var server = restify.createServer();
 server.use(restify.bodyParser());
-server.post('/authenticate/', authenticate);
-server.get('/account/:id', ensureAuthorised, accountGet);
+server.post('/api/authenticate/', authenticate);
+server.get('/api/account/:id', ensureAuthorised, accountGet);
 server.get('\/content/.*', restify.serveStatic({
     'directory': './client',
     'default': 'index.html'
@@ -116,23 +116,25 @@ server.get('\/.*.html', restify.serveStatic({
     'directory': './client',
     'default': 'index.html'
 }));
-server.get('\/.*', function(req, res) {
+server.get('\/.*', function(req, res, next) {
     // XXX If i cant find a better way to do this im totally switching to
     // express
     fs.readFile('./client/index.html', 'utf8', function(err, file) {
-    if (err) {
-      res.send(500);
-      return next();
-    }
+        if (err) {
+            res.send(500);
+            return next();
+        }
 
-    res.writeHead(200, {
-      'Content-Length': Buffer.byteLength(file),
-      'Content-Type': 'text/html'
+        res.writeHead(200, {
+            'Content-Length': Buffer.byteLength(file),
+            'Content-Type': 'text/html'
+        });
+
+        res.write(file);
+        res.end();
+
+        return next();
     });
-    res.write(file);
-    res.end();
-    return next();
-  });
 });
 
 server.listen(8080, function() {
