@@ -21,7 +21,7 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
 
     $locationProvider.html5Mode(true);
 
-    $httpProvider.interceptors.push(['$q', '$location', '$localStorage', function($q, $location, $localStorage) {
+    $httpProvider.interceptors.push(function($q, $location, $localStorage) {
             return {
                 'request': function (config) {
                     config.headers = config.headers || {};
@@ -37,7 +37,7 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
                     return $q.reject(response);
                 }
             };
-        }]);
+        });
 });
 
 servicesApp.controller('MainController', function() {

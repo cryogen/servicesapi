@@ -28,33 +28,35 @@ function sendQuery(query, params, callback) {
 
 function authenticate(req, res, next) {
     sendQuery('SELECT * FROM nickname n JOIN account a on a.primary_nick = n.id WHERE n.nick = $1',
-                            [req.body.nickname], function(result) {
-                                if(result.length === 0) {
-                                    res.json({ error: 'Invalid username/password' });
-                                    next();
-                                    return;
-                                }
-                                var shasum = crypto.createHash('sha1');
-                                shasum.update(req.body.password + result[0].salt);
-                                var hash = shasum.digest('hex').toUpperCase();
-                                if(hash !== result[0].password.toUpperCase()) {
-                                    res.json({ error: 'Invalid username/password' });
-                                    next();
-                                    return;
-                                }
+              [req.body.nickname],
+              function(result) {
+                if(result.length === 0) {
+                    res.json({ error: 'Invalid username/password' });
+                    next();
+                    return;
+                }
 
-                                var nickname = {
-                                    id: result[0].id + '',
-                                    nickname: result[0].nick,
-                                    email: result[0].email
-                                 };
+                var shasum = crypto.createHash('sha1');
+                shasum.update(req.body.password + result[0].salt);
+                var hash = shasum.digest('hex').toUpperCase();
+                if(hash !== result[0].password.toUpperCase()) {
+                    res.json({ error: 'Invalid username/password' });
+                    next();
+                    return;
+                }
 
-                                nickname.token = jwt.sign(nickname, 'reallysecret');
+                var nickname = {
+                    id: result[0].id + '',
+                    nickname: result[0].nick,
+                    email: result[0].email
+                 };
 
-                                res.json(nickname);
+                nickname.token = jwt.sign(nickname, 'reallysecret');
 
-                                next();
-                            });
+                res.json(nickname);
+
+                next();
+            });
 }
 
 function ensureAuthorised(req, res, next) {
@@ -117,24 +119,10 @@ server.get('\/.*.html', restify.serveStatic({
     'default': 'index.html'
 }));
 server.get('\/.*', function(req, res, next) {
-    // XXX If i cant find a better way to do this im totally switching to
-    // express
-    fs.readFile('./client/index.html', 'utf8', function(err, file) {
-        if (err) {
-            res.send(500);
-            return next();
-        }
-
-        res.writeHead(200, {
-            'Content-Length': Buffer.byteLength(file),
-            'Content-Type': 'text/html'
-        });
-
-        res.write(file);
-        res.end();
-
-        return next();
+    res.writeHead(200, {
+        'Content-Type': 'text/html'
     });
+    fs.createReadStream('./client/index.html').pipe(res).on('finish', next);
 });
 
 server.listen(8080, function() {
