@@ -1,0 +1,31 @@
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="nickname">IRC Nickname</label>
+        <div class="col-sm-3">
+            <input
+                ng-model="nickname"
+                type="text"
+                class="form-control"
+                id="nickname"
+                placeholder="Enter services nickname">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-sm-2 control-label" for="password">Password</label>
+        <div class="col-sm-3">
+            <input
+                ng-model="password"
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="Enter services password">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-3">
+            <button type="button" class="btn btn-default" ng-click="authenticate()">Submit</button>
+        </div>
+    </div>
+
+    <span class="error" ng-show="errorMessage">{{ errorMessage }}</span>
+</form>
