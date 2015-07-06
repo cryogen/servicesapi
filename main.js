@@ -36,7 +36,8 @@ function authenticate(req, res, next) {
                                 }
                                 var shasum = crypto.createHash('sha1');
                                 shasum.update(req.body.password + result[0].salt);
-                                if(shasum.digest('hex').toUpperCase() !== result[0].password.toUpperCase) {
+                                var hash = shasum.digest('hex').toUpperCase();
+                                if(hash !== result[0].password.toUpperCase()) {
                                     res.json({ error: 'Invalid username/password' });
                                     next();
                                     return;
@@ -123,7 +124,7 @@ server.get('\/.*', function(req, res) {
       res.send(500);
       return next();
     }
- 
+
     res.writeHead(200, {
       'Content-Length': Buffer.byteLength(file),
       'Content-Type': 'text/html'
