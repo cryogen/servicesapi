@@ -4,9 +4,9 @@
     "description": "App for interacting with the oftc irc services database",
     "author": "Stuart Walsh <stu@ipng.org.uk>",
     "scripts": {
-        "start": "node main.js"
+        "start": "node server/index.js"
     },
-    "main": "main.js",
+    "main": "server/index.js",
     "repository": {
         "type": "git",
         "url": "https://github.com/cryogen/servicesapi"
