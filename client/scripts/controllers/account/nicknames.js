@@ -2,14 +2,15 @@
 
 'use strict';
 
-angular.module('services').controller('AccountIndexController', function($scope, $http, $routeParams) {
-    $scope.getAccount = function() {
-        $http.get('/api/account/' + ($routeParams.id || '')).success(function(data) {
-            $scope.account = data;
+angular.module('services').controller('AccountNicknamesController', function($scope, $http, $routeParams) {
+    $scope.getNicknames = function() {
+        $http.get('/api/account/' + ($routeParams.id || '') + '/nicknames').success(function(data) {
+            $scope.nicknames = data;
         });
     };
 
-    $scope.getAccount();
+    $scope.getNicknames();
+
     $scope.$emit('sidebarmenu', [
         {
             name: 'Details',

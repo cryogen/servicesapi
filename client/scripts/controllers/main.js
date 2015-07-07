@@ -18,6 +18,10 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         template: ' ',
         controller: 'AccountLogoutController'
     })
+    .when('/account/:id?/nicknames', {
+        templateUrl: 'nicknames.html',
+        controller: 'AccountNicknamesController'
+    })
     .when('/account/:id?', {
         templateUrl: 'account.html',
         controller: 'AccountIndexController'
@@ -49,6 +53,8 @@ servicesApp.controller('MainController', function($scope, $localStorage, $locati
         $scope.loggedIn = true;
     }
 
+    $scope.menu = [];
+
     $scope.$on('tokenChanged', function() {
         if($localStorage.token) {
             $scope.loggedIn = true;
@@ -56,6 +62,10 @@ servicesApp.controller('MainController', function($scope, $localStorage, $locati
         else {
             $scope.loggedIn = false;
         }
+    });
+
+    $scope.$on('sidebarmenu', function(event, menu) {
+        $scope.menu = menu;
     });
 
     $scope.isActive = function(path) {

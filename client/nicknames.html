@@ -1,0 +1,16 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nickname</th>
+            <th>Registered</th>
+            <th>Last Seen</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="nickname in nicknames">
+            <td>{{ nickname.nick }}</td>
+            <td>{{ nickname.reg_time * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' }}</td>
+            <td>{{ nickname.last_seen * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' }}</td>
+        </tr>
+    </tbody>
+</table>

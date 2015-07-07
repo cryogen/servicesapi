@@ -32,15 +32,12 @@ function accountLogin(req, res) {
 }
 
 function accountGet(req, res) {
+    console.info('get');
     if(!req.authObject) {
         return res.send(403);
     }
 
-    if(req.params.id !== req.authObject.id) {
-        req.params.id = req.authObject.id;
-    }
-
-    accountRepository.getById(req.params.id, function(result) {
+    accountRepository.getById(req.authObject.id, function(result) {
         return res.json({
             cloak: result.cloak,
             email: result.email,
@@ -52,7 +49,19 @@ function accountGet(req, res) {
     });
 }
 
+function accountNicknames(req, res) {
+    console.info('nicknames');
+    if(!req.authObject) {
+        return res.send(403);
+    }
+
+    accountRepository.getNicknames(req.authObject.id, function(result) {
+        return res.json(result);
+    });
+}
+
 module.exports.init = function(server) {
     server.post('/api/account/login', accountLogin);
+    server.get('/api/account/nicknames', accountNicknames);
     server.get('/api/account/:id', accountGet);
 };

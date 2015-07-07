@@ -59,3 +59,11 @@ exports.getById = function(id, callback) {
         callback(result[0]);
     });
 };
+
+exports.getNicknames = function(id, callback) {
+    var query = 'SELECT n.* FROM nickname n INNER JOIN account a on a.id = n.account_id WHERE a.id = $1';
+
+    sendQuery(query, [id], function(result) {
+        callback(result);
+    });
+};
