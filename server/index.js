@@ -3,6 +3,7 @@
 var restify = require('restify');
 var jwt = require('jsonwebtoken');
 var fs = require('fs');
+var config = require('./config.js');
 
 var controllers = require('./controllers');
 
@@ -21,7 +22,7 @@ function ensureAuthorised(req, res, next) {
         var bearer = bearerHeader.split(' ');
         bearerToken = bearer[1];
 
-        jwt.verify(bearerToken, 'reallysecret', function(err, decoded) {
+        jwt.verify(bearerToken, config.tokenSecret, function(err, decoded) {
             if(err) {
                 console.info(err);
                 res.send(403);
@@ -77,6 +78,6 @@ server.get('\/.*', function(req, res, next) {
     fs.createReadStream('./client/index.html').pipe(res).on('finish', next);
 });
 
-server.listen(8080, function() {
+server.listen(config.port, function() {
     console.log('%s listening at %s', server.name, server.url);
 });

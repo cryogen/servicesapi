@@ -1,11 +1,10 @@
 'use strict';
 
 var pg = require('pg');
-
-var conString = 'postgres://ircservices:ircservices@localhost/ircservices';
+var config = require('./config.js');
 
 function sendQuery(query, params, callback) {
-    pg.connect(conString, function(err, client, done) {
+    pg.connect(config.connectionString, function(err, client, done) {
         if(err) {
             return console.error('error fetching client from pool', err);
         }

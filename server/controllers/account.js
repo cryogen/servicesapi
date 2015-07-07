@@ -3,6 +3,7 @@
 var accountRepository = require('../accountrepository.js');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
+var config = require('../config.js');
 
 function accountLogin(req, res) {
     accountRepository.getByNick(req.body.nickname, function(result) {
@@ -24,7 +25,7 @@ function accountLogin(req, res) {
             email: result.email
         };
 
-        nickname.token = jwt.sign(nickname, 'reallysecret');
+        nickname.token = jwt.sign(nickname, config.tokenSecret);
 
         return res.json(nickname);
     });
