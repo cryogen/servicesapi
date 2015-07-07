@@ -2,7 +2,7 @@
 
 'use strict';
 
-angular.module('services').controller('AccountLoginController', 
+angular.module('services').controller('AccountLoginController',
 function($scope, $http, $localStorage, $location) {
     $scope.login = function() {
         $http.post('/api/account/login', {

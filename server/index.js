@@ -13,7 +13,7 @@ function ensureAuthorised(req, res, next) {
     console.info('Request: from: ', req.connection.remoteAddress + ' to: ' + req.path());
 
     // XXX hardcoded path
-    if(req.path().indexOf('/api/') === -1 || req.path() == '/api/account/login') {
+    if(req.path().indexOf('/api/') === -1 || req.path() === '/api/account/login') {
         return next();
     }
 
@@ -22,16 +22,16 @@ function ensureAuthorised(req, res, next) {
         bearerToken = bearer[1];
 
         jwt.verify(bearerToken, 'reallysecret', function(err, decoded) {
-                   if(err) {
-                       console.info(err);
-                       res.send(403);
-                       return;
-                   }
+            if(err) {
+                console.info(err);
+                res.send(403);
+                return;
+            }
 
-                   req.token = bearerToken;
-                   req.authObject = decoded;
-                   next();
-                   });
+            req.token = bearerToken;
+            req.authObject = decoded;
+            next();
+        });
     }
     else {
         res.send(403);
@@ -43,9 +43,9 @@ var server = restify.createServer();
 server.on('uncaughtException', function(req, res, route, err) {
     return res.send(err.code || 500, {
         code: err.code || 500,
-        error_description: err.status || err.message || err.description ||
+        errorDescription: err.status || err.message || err.description ||
         'Internal Server Error',
-        req_body: req.params,
+        reqBody: req.params,
         stack: err.stack
     });
 });

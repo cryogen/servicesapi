@@ -18,7 +18,7 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         template: ' ',
         controller: 'AccountLogoutController'
     })
-    .when('/account/:id', {
+    .when('/account/:id?', {
         templateUrl: 'account.html',
         controller: 'AccountIndexController'
     });

@@ -1,13 +1,10 @@
+'use strict';
+
 var accountRepository = require('../accountrepository.js');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 
-module.exports.init = function(server) {
-    server.post('/api/account/login', accountLogin);
-    server.get('/api/account/:id', accountGet);
-}
-
-function accountLogin(req, res, next) {
+function accountLogin(req, res) {
     accountRepository.getByNick(req.body.nickname, function(result) {
         if(!result) {
             return res.json({ error: 'Invalid username or password' });
@@ -26,24 +23,24 @@ function accountLogin(req, res, next) {
             nickname: result.nick,
             email: result.email
         };
-        
+
         nickname.token = jwt.sign(nickname, 'reallysecret');
 
         return res.json(nickname);
     });
 }
 
-function accountGet(req, res, next) {
+function accountGet(req, res) {
     if(!req.authObject) {
         return res.send(403);
     }
 
     if(req.params.id !== req.authObject.id) {
-        return res.send(403);
+        req.params.id = req.authObject.id;
     }
 
     accountRepository.getById(req.params.id, function(result) {
-        return res.json({ 
+        return res.json({
             cloak: result.cloak,
             email: result.email,
             lastHost: result.last_host,
@@ -53,3 +50,8 @@ function accountGet(req, res, next) {
         });
     });
 }
+
+module.exports.init = function(server) {
+    server.post('/api/account/login', accountLogin);
+    server.get('/api/account/:id', accountGet);
+};
