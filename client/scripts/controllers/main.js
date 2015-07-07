@@ -10,13 +10,17 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         templateUrl: 'home.html',
         controller: 'MainController'
     })
-    .when('/login', {
+    .when('/account/login', {
         templateUrl: 'login.html',
-        controller: 'LoginController'
+        controller: 'AccountLoginController'
+    })
+    .when('/account/logout', {
+        template: ' ',
+        controller: 'AccountLogoutController'
     })
     .when('/account/:id', {
         templateUrl: 'account.html',
-        controller: 'AccountController'
+        controller: 'AccountIndexController'
     });
 
     $locationProvider.html5Mode(true);
@@ -32,7 +36,7 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
                 },
                 'responseError': function(response) {
                     if(response.status === 401 || response.status === 403) {
-                        $location.path('/login');
+                        $location.path('/account/login');
                     }
                     return $q.reject(response);
                 }
@@ -40,5 +44,17 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         });
 });
 
-servicesApp.controller('MainController', function() {
+servicesApp.controller('MainController', function($scope, $localStorage) {
+    if($localStorage.token) {
+        $scope.loggedIn = true;
+    }
+
+    $scope.$on('tokenChanged', function() {
+        if($localStorage.token) {
+            $scope.loggedIn = true;
+        }
+        else {
+            $scope.loggedIn = false;
+        }
+    });
 });

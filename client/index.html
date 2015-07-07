@@ -14,13 +14,14 @@
             <script src="/scripts/angular-route.js"></script>
             <script src="/scripts/angular-resource.js"></script>
             <script src="/scripts/ngStorage.js"></script>
-            <script src="/scripts/maincontroller.js"></script>
-            <script src="/scripts/logincontroller.js"></script>
-            <script src="/scripts/accountcontroller.js"></script>
+            <script src="/scripts/controllers/main.js"></script>
+            <script src="/scripts/controllers/account/login.js"></script>
+            <script src="/scripts/controllers/account/logout.js"></script>
+            <script src="/scripts/controllers/account/index.js"></script>
 
             <base href="/">
     </head>
-    <body role="document">
+    <body role="document" ng-controller="MainController">
         <nav class="navbar navbar-inverse navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -40,12 +41,13 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
                         <li><a href="/">Home</a></li>
-                        <li><a href="/login">Login</a></li>
+                        <li ng-hide="loggedIn"><a href="/account/login">Login</a></li>
+                        <li ng-show="loggedIn"><a href="/account/logout">Logout</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <div class="container" ng-controller="MainController" role="main">
+        <div class="container" role="main">
             <div ng-view></div>
         </div>
     </body>

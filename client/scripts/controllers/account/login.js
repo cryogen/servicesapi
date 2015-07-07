@@ -2,8 +2,9 @@
 
 'use strict';
 
-angular.module('services').controller('LoginController', function($scope, $http, $localStorage, $location) {
-    $scope.authenticate = function() {
+angular.module('services').controller('AccountLoginController', 
+function($scope, $http, $localStorage, $location) {
+    $scope.login = function() {
         $http.post('/api/account/login', {
             nickname: $scope.nickname,
             password: $scope.password
@@ -15,6 +16,7 @@ angular.module('services').controller('LoginController', function($scope, $http,
             else {
                 $scope.errorMessage = undefined;
                 $localStorage.token = res.token;
+                $scope.$emit('tokenChanged', res.token);
                 $location.path('/account/' + res.id);
             }
         });

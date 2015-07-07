@@ -10,7 +10,10 @@ function ensureAuthorised(req, res, next) {
     var bearerToken;
     var bearerHeader = req.headers.authorization;
 
-    if(req.path().indexOf('/api/') === -1) {
+    console.info('Request: from: ', req.connection.remoteAddress + ' to: ' + req.path());
+
+    // XXX hardcoded path
+    if(req.path().indexOf('/api/') === -1 || req.path() == '/api/account/login') {
         return next();
     }
 
