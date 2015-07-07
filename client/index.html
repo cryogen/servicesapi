@@ -40,16 +40,31 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="/">Home</a></li>
-                        <li ng-show="loggedIn"><a href="/account">Account</a></li>
-                        <li ng-hide="loggedIn"><a href="/account/login">Login</a></li>
+                        <li ng-class="{active: isActive('/')}"><a href="/">Home</a></li>
+                        <li ng-show="loggedIn" ng-class="{active: isActive('/account')}">
+                            <a href="/account">Account</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li ng-class="{active: isActive('/account/login')}" ng-hide="loggedIn">
+                            <a href="/account/login">Login</a>
+                        </li>
                         <li ng-show="loggedIn"><a href="/account/logout">Logout</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
-        <div class="container" role="main">
-            <div ng-view></div>
+        <div clas="container-fluid">
+            <div class="row">
+                <div class="col-sm-3 col-md-2 sidebar">
+                    <ul class="nav nav-sidebar">
+                        <li><a href='/'>Testing</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" role="main">
+                    <div ng-view></div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

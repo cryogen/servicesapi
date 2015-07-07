@@ -44,7 +44,7 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         });
 });
 
-servicesApp.controller('MainController', function($scope, $localStorage) {
+servicesApp.controller('MainController', function($scope, $localStorage, $location) {
     if($localStorage.token) {
         $scope.loggedIn = true;
     }
@@ -57,4 +57,18 @@ servicesApp.controller('MainController', function($scope, $localStorage) {
             $scope.loggedIn = false;
         }
     });
+
+    $scope.isActive = function(path) {
+        var locationPath = $location.path();
+        if (path === locationPath) {
+            return true;
+        }
+
+        if(locationPath.length === 1 && locationPath.substr(1, path.length) === path) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
 });

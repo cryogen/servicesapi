@@ -17,7 +17,7 @@ function($scope, $http, $localStorage, $location) {
                 $scope.errorMessage = undefined;
                 $localStorage.token = res.token;
                 $scope.$emit('tokenChanged', res.token);
-                $location.path('/account/' + res.id);
+                $location.path('/account');
             }
         });
     };
