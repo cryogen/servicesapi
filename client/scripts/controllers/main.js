@@ -8,7 +8,7 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     $routeProvider
     .when('/', {
         templateUrl: 'home.html',
-        controller: 'MainController'
+        controller: 'HomeController'
     })
     .when('/account/login', {
         templateUrl: 'login.html',
