@@ -32,12 +32,13 @@ function accountLogin(req, res) {
 }
 
 function accountGet(req, res) {
-    console.info('get');
     if(!req.authObject) {
         return res.send(403);
     }
 
-    accountRepository.getById(req.authObject.id, function(result) {
+    var id = req.params.id || req.authObject.id;
+
+    accountRepository.getById(id, function(result) {
         return res.json({
             cloak: result.cloak,
             email: result.email,
@@ -50,7 +51,6 @@ function accountGet(req, res) {
 }
 
 function accountNicknames(req, res) {
-    console.info('nicknames');
     if(!req.authObject) {
         return res.send(403);
     }

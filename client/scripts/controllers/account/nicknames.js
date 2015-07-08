@@ -2,7 +2,8 @@
 
 'use strict';
 
-angular.module('services').controller('AccountNicknamesController', function($scope, $http, $routeParams) {
+angular.module('services')
+.controller('AccountNicknamesController', function($scope, $http, $routeParams, Account) {
     $scope.getNicknames = function() {
         $http.get('/api/account/' + ($routeParams.id || '') + '/nicknames').success(function(data) {
             $scope.nicknames = data;
@@ -11,18 +12,5 @@ angular.module('services').controller('AccountNicknamesController', function($sc
 
     $scope.getNicknames();
 
-    $scope.$emit('sidebarmenu', [
-        {
-            name: 'Details',
-            path: '/account'
-        },
-        {
-            name: 'Nicknames',
-            path: '/account/nicknames'
-        },
-        {
-            name: 'Certificates',
-            path: '/account/certificates'
-        }
-    ]);
+    $scope.$emit('sidebarmenu', Account.getMenu());
 });

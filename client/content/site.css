@@ -6711,3 +6711,6 @@ button.close {
     display: none !important;
   }
 }
+.sidebar {
+  background-color: #f5f5f5;
+}
