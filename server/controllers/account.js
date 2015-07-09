@@ -60,8 +60,19 @@ function accountNicknames(req, res) {
     });
 }
 
+function accountCertificates(req, res) {
+    if(!req.authObject) {
+        return res.send(403);
+    }
+
+    accountRepository.getCertificates(req.authObject.id, function(result) {
+        return res.json(result);
+    });
+}
+
 module.exports.init = function(server) {
     server.post('/api/account/login', accountLogin);
     server.get('/api/account/nicknames', accountNicknames);
+    server.get('/api/account/certificates', accountCertificates);
     server.get('/api/account/:id', accountGet);
 };

@@ -1,0 +1,14 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Certificate Fingerprint</th>
+            <th>Nickname to change to</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="cert in certificates">
+            <td>{{ cert.fingerprint }}</td>
+            <td>{{ cert.nick }}</td>
+        </tr>
+    </tbody>
+</table>

@@ -22,6 +22,10 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         templateUrl: 'nicknames.html',
         controller: 'AccountNicknamesController'
     })
+    .when('/account/:id?/certificates', {
+        templateUrl: 'certificates.html',
+        controller: 'AccountCertificatesController'
+    })
     .when('/account/:id?', {
         templateUrl: 'account.html',
         controller: 'AccountIndexController'
