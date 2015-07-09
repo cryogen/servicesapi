@@ -10,6 +10,10 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         templateUrl: 'home.html',
         controller: 'HomeController'
     })
+    .when('/404', {
+        templateUrl: '404.html',
+        controller: 'MainController'
+    })
     .when('/account/login', {
         templateUrl: 'login.html',
         controller: 'AccountLoginController'
@@ -29,6 +33,10 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     .when('/account/:id?', {
         templateUrl: 'account.html',
         controller: 'AccountIndexController'
+    })
+    .when('/nickname/:name', {
+        templateUrl: 'nickname/details.html',
+        controller: 'NicknameDetailsController'
     });
 
     $locationProvider.html5Mode(true);
@@ -45,6 +53,9 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
                 'responseError': function(response) {
                     if(response.status === 401 || response.status === 403) {
                         $location.path('/account/login');
+                    }
+                    else if(response.status === 404) {
+                        $location.path('/404');
                     }
                     return $q.reject(response);
                 }
