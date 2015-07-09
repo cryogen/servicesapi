@@ -9,25 +9,18 @@
         <link rel="stylesheet" href="/content/site.css">
         <script src="/scripts/jquery.js"></script>
         <script src="/scripts/bootstrap.js"></script>
-        <script src="/scripts/angular.js"></script>
-        <script src="/scripts/angular-route.js"></script>
-        <script src="/scripts/angular-resource.js"></script>
-        <script src="/scripts/ngStorage.js"></script>
-        <script src="/scripts/controllers/main.js"></script>
-        <script src="/scripts/controllers/home.js"></script>
-        <script src="/scripts/controllers/account/login.js"></script>
-        <script src="/scripts/controllers/account/logout.js"></script>
-        <script src="/scripts/controllers/account/index.js"></script>
-        <script src="/scripts/controllers/account/nicknames.js"></script>
-        <script src="/scripts/controllers/account/certificates.js"></script>
-        <script src="/scripts/services/account.js"></script>
-        <script src="/scripts/controllers/nickname/index.js"></script>
-        <script src="/scripts/controllers/nickname/details.js"></script>
+        <script src="/scripts/director.js"></script>
+        <script src="/scripts/react.js"></script>
+        <script src="/scripts/JSXTransformer.js"></script>
+
+        <script type="text/jsx" src="/scripts/components/navbar.jsx"></script>
+        <script type="text/jsx" src="/scripts/components/navbaritem.jsx"></script>
+        <script type="text/jsx" src="/scripts/components/main.jsx"></script>
 
         <base href="/">
     </head>
-    <body role="document" ng-controller="MainController">
-        <nav class="navbar navbar-default navbar-fixed-top">
+    <body id="body" role="document" ng-controller="MainController">
+        <!-- <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button"
@@ -41,38 +34,38 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="/">OFTC IRC Services</a>
+                    <a class="navbar-brand" href="#/">OFTC IRC Services</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li ng-class="{active: isActive('/')}"><a href="/">Home</a></li>
+                        <li ng-class="{active: isActive('/')}"><a href="#/">Home</a></li>
                         <li ng-show="loggedIn" ng-class="{active: isActive('/account')}">
-                            <a href="/account">Account</a>
+                            <a href="#/account">Account</a>
                         </li>
                         <li ng-class="{active: isActive('/nickname')}">
-                            <a href="/nickname">Nickname</a>
+                            <a href="#/nickname">Nickname</a>
                         </li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li ng-class="{active: isActive('/account/login')}" ng-hide="loggedIn">
-                            <a href="/account/login">Login</a>
+                            <a href="#/account/login">Login</a>
                         </li>
-                        <li ng-show="loggedIn"><a href="/account/logout">Logout</a></li>
+                        <li ng-show="loggedIn"><a href="#/account/logout">Logout</a></li>
                     </ul>
                 </div>
             </div>
-        </nav>
+        </nav> -->
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-3 col-md-2 sidebar" ng-hide="menu.length == 0">
+            <!--    <div class="col-sm-3 col-md-2 sidebar" ng-hide="menu.length == 0">
                     <ul class="nav nav-sidebar">
                         <li ng-class="{active: isActive('{{ item.path }}', true)}" ng-repeat="item in menu">
                             <a ng-href="{{ item.path }}">{{ item.name }}</a>
                         </li>
                     </ul>
-                </div>
+                </div>-->
                 <div ng-class="{'col-sm-offset-3 col-md-offset-2': menu.length != 0}" class="col-sm-9 col-md-10 main" role="main">
-                    <div ng-view></div>
+                    <div id="content"></div>
                 </div>
             </div>
         </div>

@@ -16,9 +16,6 @@
         "pg": "*",
         "jsonwebtoken": "*",
         "jquery": "*",
-        "angular": "*",
-        "angular-route": "*",
-        "angular-resource": "*",
         "ngstorage": "*"
     },
     "license": "MIT"
