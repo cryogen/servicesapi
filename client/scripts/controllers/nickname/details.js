@@ -7,6 +7,7 @@ angular.module('services')
     $scope.getNickname = function() {
         $http.get('/api/nickname/' + ($routeParams.name || '')).success(function(data) {
             $scope.nickname = data;
+            $scope.loaded = true;
         });
     };
 
