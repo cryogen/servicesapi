@@ -3,11 +3,17 @@
 'use strict';
 
 angular.module('services')
-.controller('NicknameIndexController', function($scope, $location) {
+.controller('NicknameIndexController', function($scope, $http) {
     $scope.nick = '';
+    $scope.nickname = undefined;
 
     $scope.search = function(nick) {
-        $location.path('/nickname/' + nick);
+        $http.get('/api/nickname/' + nick).success(function(data) {
+            $scope.nickname = data;
+            $scope.loaded = true;
+        }).failure(function() {
+            console.info('fail');
+        });
     };
 
     $scope.$emit('sidebarmenu', []);
