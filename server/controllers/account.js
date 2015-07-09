@@ -4,6 +4,7 @@ var accountRepository = require('../accountrepository.js');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 var config = require('../config.js');
+var middleware = require('../middleware.js');
 
 function accountLogin(req, res) {
     accountRepository.getByNick(req.body.nickname, function(result) {
@@ -72,7 +73,7 @@ function accountCertificates(req, res) {
 
 module.exports.init = function(server) {
     server.post('/api/account/login', accountLogin);
-    server.get('/api/account/nicknames', accountNicknames);
-    server.get('/api/account/certificates', accountCertificates);
-    server.get('/api/account/:id', accountGet);
+    server.get('/api/account/nicknames', middleware.ensureAuthorised, accountNicknames);
+    server.get('/api/account/certificates', middleware.ensureAuthorised, accountCertificates);
+    server.get('/api/account/:id', middleware.ensureAuthorised, accountGet);
 };

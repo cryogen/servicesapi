@@ -1,43 +1,10 @@
 'use strict';
 
 var restify = require('restify');
-var jwt = require('jsonwebtoken');
 var fs = require('fs');
 var config = require('./config.js');
 
 var controllers = require('./controllers');
-
-function ensureAuthorised(req, res, next) {
-    var bearerToken;
-    var bearerHeader = req.headers.authorization;
-
-    console.info('Request: from: ', req.connection.remoteAddress + ' to: ' + req.path());
-
-    // XXX hardcoded path
-    if(req.path().indexOf('/api/') === -1 || req.path() === '/api/account/login') {
-        return next();
-    }
-
-    if (typeof bearerHeader !== 'undefined') {
-        var bearer = bearerHeader.split(' ');
-        bearerToken = bearer[1];
-
-        jwt.verify(bearerToken, config.tokenSecret, function(err, decoded) {
-            if(err) {
-                console.info(err);
-                res.send(403);
-                return;
-            }
-
-            req.token = bearerToken;
-            req.authObject = decoded;
-            next();
-        });
-    }
-    else {
-        res.send(403);
-    }
-}
 
 var server = restify.createServer();
 
@@ -52,7 +19,6 @@ server.on('uncaughtException', function(req, res, route, err) {
 });
 
 server.use(restify.bodyParser());
-server.use(ensureAuthorised);
 
 controllers.init(server);
 
