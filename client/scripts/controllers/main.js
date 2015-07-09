@@ -72,13 +72,22 @@ servicesApp.controller('MainController', function($scope, $localStorage, $locati
         $scope.menu = menu;
     });
 
-    $scope.isActive = function(path) {
+    $scope.isActive = function(path, exact) {
         var locationPath = $location.path();
+        var useExactMatch = exact || false;
+
         if (path === locationPath) {
             return true;
         }
+        else if(useExactMatch) {
+            return false;
+        }
 
-        if(locationPath.length === 1 && locationPath.substr(1, path.length) === path) {
+        if(locationPath.length === 1 || path.length === 1) {
+            return false;
+        }
+
+        if(locationPath.substr(0, path.length) === path) {
             return true;
         }
         else {

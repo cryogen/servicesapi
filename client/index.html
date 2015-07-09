@@ -25,7 +25,7 @@
         <base href="/">
     </head>
     <body role="document" ng-controller="MainController">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button"
@@ -61,7 +61,7 @@
             <div class="row">
                 <div class="col-sm-3 col-md-2 sidebar" ng-hide="menu.length == 0">
                     <ul class="nav nav-sidebar">
-                        <li ng-class="{active: isActive('{{ item.path }}')}" ng-repeat="item in menu">
+                        <li ng-class="{active: isActive('{{ item.path }}', true)}" ng-repeat="item in menu">
                             <a ng-href="{{ item.path }}">{{ item.name }}</a>
                         </li>
                     </ul>
