@@ -66,7 +66,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" role="main">
+                <div ng-class="{'col-sm-offset-3 col-md-offset-2': menu.length != 0}" class="col-sm-9 col-md-10 main" role="main">
                     <div ng-view></div>
                 </div>
             </div>
