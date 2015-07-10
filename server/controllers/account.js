@@ -23,7 +23,8 @@ function accountLogin(req, res) {
         var nickname = {
             id: result.id + '',
             nickname: result.nick,
-            email: result.email
+            email: result.email,
+            admin: result.flag_admin
         };
 
         nickname.token = jwt.sign(nickname, config.tokenSecret);

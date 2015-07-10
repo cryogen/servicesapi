@@ -5,6 +5,7 @@ var fs = require('fs');
 var config = require('./config.js');
 
 var controllers = require('./controllers');
+var middleware = require('./middleware.js');
 
 var server = restify.createServer();
 
@@ -19,6 +20,7 @@ server.on('uncaughtException', function(req, res, route, err) {
 });
 
 server.use(restify.bodyParser());
+server.use(middleware.checkAuthorised);
 
 controllers.init(server);
 

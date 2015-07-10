@@ -8,20 +8,21 @@ function nicknameGet(req, res) {
             return res.send(404);
         }
 
-        var nick = {
-            nick: result.nick,
-            lastHost: result.last_host,
-            lastRealname: result.last_realname,
-            lastQuitMessage: result.last_quit_msg,
-            lastQuitTime: result.last_quit_time,
-            regTime: result.reg_time
-        };
+        if((req.authObject && req.authObject.admin) || !result.flag_private) {
+            var nick = {
+                nick: result.nick,
+                lastHost: result.last_host,
+                lastRealname: result.last_realname,
+                lastQuitMessage: result.last_quit_msg,
+                lastQuitTime: result.last_quit_time,
+                regTime: result.reg_time,
+                email: result.email
+            };
 
-        if(!result.flag_private) {
-            nick.email = result.email;
+            return res.send(nick);
         }
 
-        res.send(nick);
+        return res.send(404);
     });
 }
 

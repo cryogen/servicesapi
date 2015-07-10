@@ -11,8 +11,7 @@ angular.module('services')
         $http.get('/api/nickname/' + nick).success(function(data) {
             $scope.nickname = data;
             $scope.loaded = true;
-        }).failure(function() {
-            console.info('fail');
+        }).error(function() {
         });
     };
 
