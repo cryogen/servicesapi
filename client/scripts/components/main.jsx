@@ -1,4 +1,4 @@
-/* global React, document, Router, Navbar, Account, Login */
+/* global React, document, Router, Navbar, Account, Login, localStorage, Logout */
 
 'use strict';
 
@@ -18,7 +18,7 @@ var Main = React.createClass({
             '/': setState.bind(this, {currentPage: 'Home'}),
             '/account': setState.bind(this, {currentPage: 'Account'}),
             '/login': setState.bind(this, {currentPage: 'Login'}),
-            '/account/logout': setState.bind(this, {currentPage: 'Logout'}),
+            '/logout': setState.bind(this, {currentPage: 'Logout'}),
             '/nickname': setState.bind(this, {currentPage: 'Nickname'})
         });
 
@@ -26,6 +26,14 @@ var Main = React.createClass({
 //      router.configure({ html5history: true });
 
         router.init('/');
+
+        var token = localStorage.getItem('token');
+
+        console.info(token);
+
+        if(token) {
+            this.setState({ loggedIn: true });
+        }
     },
 
     render: function() {
@@ -38,23 +46,22 @@ var Main = React.createClass({
             case 'Login':
                 currentPage = <Login />;
                 break;
+            case 'Logout':
+                currentPage = <Logout />;
+                break;
             default:
                 currentPage = null;
                 break;
         }
 
         var pages = [
-            {
-                name: 'Home',
-                path: '#/'
-            },
-            {
-                name: 'Account',
-                path: '#/account'
-            }
-        ];
+        {
+            name: 'Home',
+            path: '#/'
+        }];
 
         if(this.state.loggedIn) {
+            pages.push({ name: 'Account', path: '#/account' });
             pages.push({ name: 'Logout', path: '#/logout' });
         }
         else {

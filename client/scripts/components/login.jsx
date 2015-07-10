@@ -1,4 +1,4 @@
-/* global React, window, $ */
+/* global React, window, $, localStorage */
 
 'use strict';
 
@@ -33,13 +33,13 @@ window.Login = React.createClass({
 
         $.post('/api/account/login', data, function(ret, status) {
             if(status === 'success' && !ret.error) {
-                console.info('success');
+                this.setState({ errorMessage: '' });
+                localStorage.setItem('token', ret.token);
+                window.location = '#/account';
             }
             else {
-                console.info('fail');
                 this.setState({ errorMessage: ret.error || 'An error occured' });
             }
-            console.info(status, ret);
         }.bind(this));
     },
 
@@ -48,7 +48,7 @@ window.Login = React.createClass({
 
         if(this.state.errorMessage) {
             errorMessage = (<div className="form-group">
-                               <div className="error">{ this.state.errorMessage }</div>
+                               <div className="has-error">{ this.state.errorMessage }</div>
                            </div>);
         }
 

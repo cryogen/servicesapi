@@ -16,7 +16,8 @@
         "pg": "*",
         "jsonwebtoken": "*",
         "jquery": "*",
-        "ngstorage": "*"
+        "react": "*",
+        "director": "*"
     },
     "license": "MIT"
 }
