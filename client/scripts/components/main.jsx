@@ -1,15 +1,14 @@
-/* global React, document, Router, Navbar */
+/* global React, document, Router, Navbar, Account, Login */
 
 'use strict';
 
-var app = app || {};
-
-var MainApplication = React.createClass({
+var Main = React.createClass({
     displayName: 'MainApplication',
 
     getInitialState: function () {
         return {
-            currentPage: 'Home'
+            currentPage: 'Home',
+            loggedIn: false
         };
     },
 
@@ -18,7 +17,7 @@ var MainApplication = React.createClass({
         var router = Router({
             '/': setState.bind(this, {currentPage: 'Home'}),
             '/account': setState.bind(this, {currentPage: 'Account'}),
-            '/account/login': setState.bind(this, {currentPage: 'Login'}),
+            '/login': setState.bind(this, {currentPage: 'Login'}),
             '/account/logout': setState.bind(this, {currentPage: 'Logout'}),
             '/nickname': setState.bind(this, {currentPage: 'Nickname'})
         });
@@ -30,18 +29,51 @@ var MainApplication = React.createClass({
     },
 
     render: function() {
+        var currentPage = {};
+
+        switch(this.state.currentPage) {
+            case 'Account':
+                currentPage = <Account />;
+                break;
+            case 'Login':
+                currentPage = <Login />;
+                break;
+            default:
+                currentPage = null;
+                break;
+        }
+
+        var pages = [
+            {
+                name: 'Home',
+                path: '#/'
+            },
+            {
+                name: 'Account',
+                path: '#/account'
+            }
+        ];
+
+        if(this.state.loggedIn) {
+            pages.push({ name: 'Logout', path: '#/logout' });
+        }
+        else {
+            pages.push({ name: 'Login', path: '#/login' });
+        }
+
         return (
-            <Navbar currentPage={ this.state.currentPage } pages={[
-                {
-                    name: 'Home',
-                    path: '#/'
-                },
-                {
-                    name: 'Account',
-                    path: '#/account'
-                } ]} />
+            <div>
+                <Navbar currentPage={ this.state.currentPage } pages={ pages } />
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="main">
+                            { currentPage }
+                        </div>
+                    </div>
+                </div>
+            </div>
         );
     }
 });
 
-React.render(<MainApplication />, document.getElementById('body'));
+React.render(<Main />, document.getElementById('body'));

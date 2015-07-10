@@ -7,13 +7,13 @@ var config = require('../config.js');
 var middleware = require('../middleware.js');
 
 function accountLogin(req, res) {
-    accountRepository.getByNick(req.body.nickname, function(result) {
+    accountRepository.getByNick(req.params.nickname, function(result) {
         if(!result) {
             return res.json({ error: 'Invalid username or password' });
         }
 
         var shasum = crypto.createHash('sha1');
-        shasum.update(req.body.password + result.salt);
+        shasum.update(req.params.password + result.salt);
         var hash = shasum.digest('hex').toUpperCase();
 
         if(hash !== result.password.toUpperCase()) {
