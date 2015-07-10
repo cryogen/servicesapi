@@ -2,8 +2,27 @@
 
 'use strict';
 
+var pageMap = {
+    Account: {
+        markup: <Account loggedIn={ this.state.loggedIn } />,
+        public: true,
+        sidebarItems: {
+            Details: {
+                path: '#/account'
+            },
+            Nicknames: {
+                path: '#/account/nicknames'
+            },
+            Certificates: {
+                path: '#/account/certificates'
+            }
+        }
+    }
+};
+
 var Main = React.createClass({
     displayName: 'MainApplication',
+
 
     getInitialState: function () {
         return {
@@ -22,17 +41,18 @@ var Main = React.createClass({
             '/nickname': setState.bind(this, {currentPage: 'Nickname'})
         });
 
-//      this is kind of screwey, but should really work.
-//      router.configure({ html5history: true });
-
         router.init('/');
+        router.configure({ after: this.routeChanged });
+    },
 
+    routeChanged: function() {
         var token = localStorage.getItem('token');
-
-        console.info(token);
 
         if(token) {
             this.setState({ loggedIn: true });
+        }
+        else {
+            this.setState({ loggedIn: false });
         }
     },
 
@@ -41,13 +61,13 @@ var Main = React.createClass({
 
         switch(this.state.currentPage) {
             case 'Account':
-                currentPage = <Account />;
+                currentPage = <Account loggedIn={ this.state.loggedIn } />;
                 break;
             case 'Login':
-                currentPage = <Login />;
+                currentPage = <Login loggedIn={ this.state.loggedIn } />;
                 break;
             case 'Logout':
-                currentPage = <Logout />;
+                currentPage = <Logout loggedIn={ this.state.loggedIn } />;
                 break;
             default:
                 currentPage = null;
