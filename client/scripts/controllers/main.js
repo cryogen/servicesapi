@@ -45,6 +45,14 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     .when('/nickname/:name', {
         templateUrl: 'nickname/details.html',
         controller: 'NicknameDetailsController'
+    })
+    .when('/channel/:name', {
+        templateUrl: 'channel/details.html',
+        controller: 'ChannelDetailsController'
+    })
+    .when('/channel/:name/access', {
+        templateUrl: 'channel/access.html',
+        controller: 'ChannelAccessController'
     });
 
     $locationProvider.html5Mode(true);

@@ -19,6 +19,14 @@ server.on('uncaughtException', function(req, res, route, err) {
     });
 });
 
+function logRequests(req, res, next) {
+    console.info('Request: from: ', req.connection.remoteAddress + ' to: ' + req.path());
+
+    return next();
+}
+
+server.use(logRequests);
+
 server.use(restify.bodyParser());
 server.use(middleware.checkAuthorised);
 

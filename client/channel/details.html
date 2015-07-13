@@ -1,0 +1,18 @@
+<dl class="dl-horizontal" ng-show="loaded">
+    <dt>Channel:</dt>
+    <dd>{{ channel.name }}</dd>
+    <dt>Description:</dt>
+    <dd>{{ channel.description }}</dd>
+    <dt>E-mail Address:</dt>
+    <dd>{{ channel.email }}</dd>
+    <dt>Entry Message:</dt>
+    <dd>{{ channel.entryMessage }}</dd>
+    <dt>Mode Lock:</dt>
+    <dd>{{ channel.modeLock }}</dd>
+    <dt>topic:</dt>
+    <dd>{{ channel.topic }}</dd>
+    <dt>Last Used:</dt>
+    <dd>{{ channel.lastUsed * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</dd>
+    <dt>Registered:</dt>
+    <dd>{{ channel.regTime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' }}</dd>
+</dl>

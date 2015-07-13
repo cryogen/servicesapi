@@ -1,0 +1,14 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nick</th>
+            <th>Access Level</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="access in accessList">
+            <td><a ng-href="/nickname/{{ access.nick }}">{{ access.nick }}</a></td>
+            <td>{{ access.level | chanaccess }}</td>
+        </tr>
+    </tbody>
+</table>

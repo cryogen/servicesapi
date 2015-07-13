@@ -1,4 +1,4 @@
-/*global angular */
+/*global angular, window */
 
 'use strict';
 
@@ -27,3 +27,7 @@ angular.module('services').filter('chanaccess', function() {
         }
     };
 });
+
+angular.module('services').filter('urlEncode', [function() {
+    return window.encodeURIComponent;
+}]);
