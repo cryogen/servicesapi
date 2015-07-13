@@ -1,4 +1,8 @@
 @import "bootstrap/bootstrap.less";
+
+@background: #f8f8f8;
+@active: #428bca;
+
 /*
  * Base structure
  */
@@ -27,7 +31,7 @@ body {
     padding: 20px;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f8f8f8;
+    background-color: @background;
     border-right: 1px solid #eee;
   }
 }
@@ -46,7 +50,7 @@ body {
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
   color: #fff;
-  background-color: #428bca;
+  background-color: @active;
 }
 
 /*
@@ -64,4 +68,22 @@ body {
 }
 .main .page-header {
   margin-top: 0;
+}
+
+.dl-horizontal {
+    border: 2px solid lighten(@active, 30%);
+    border-radius: 5px;
+}
+
+.dl-horizontal dt {
+    background-color: @background;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 8px 2px;
+}
+
+.dl-horizontal dd {
+    padding-top: 8px;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
