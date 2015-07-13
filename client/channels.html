@@ -1,0 +1,14 @@
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Channel</th>
+            <th>Access Level</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="channel in channels">
+            <td>{{ channel.channel }}</td>
+            <td>{{ channel.level | chanaccess }}</td>
+        </tr>
+    </tbody>
+</table>

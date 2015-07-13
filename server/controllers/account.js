@@ -1,6 +1,7 @@
 'use strict';
 
 var accountRepository = require('../accountrepository.js');
+var channelRepository = require('../channelRepository.js');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 var config = require('../config.js');
@@ -72,9 +73,20 @@ function accountCertificates(req, res) {
     });
 }
 
+function accountChannels(req, res) {
+    if(!req.authObject) {
+        return res.send(403);
+    }
+
+    channelRepository.getChannelsForAccount(req.authObject.id, function(result) {
+        return res.send(result);
+    });
+}
+
 module.exports.init = function(server) {
     server.post('/api/account/login', accountLogin);
     server.get('/api/account/nicknames', middleware.ensureAuthorised, accountNicknames);
     server.get('/api/account/certificates', middleware.ensureAuthorised, accountCertificates);
+    server.get('/api/account/channels', middleware.ensureAuthorised, accountChannels);
     server.get('/api/account/:id', middleware.ensureAuthorised, accountGet);
 };

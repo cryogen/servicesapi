@@ -17,6 +17,10 @@ angular.module('services').factory('Account', function() {
             {
                 name: 'Certificates',
                 path: '/account/certificates'
+            },
+            {
+                name: 'Channels',
+                path: '/account/channels'
             }];
         }
     };
