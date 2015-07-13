@@ -1,6 +1,6 @@
 'use strict';
 
-var channelRepository = require('../channelRepository.js');
+var channelRepository = require('../channelrepository.js');
 
 function channelGet(req, res) {
     channelRepository.getByName(req.params.name, function(result) {

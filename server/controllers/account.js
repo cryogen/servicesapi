@@ -1,7 +1,7 @@
 'use strict';
 
 var accountRepository = require('../accountrepository.js');
-var channelRepository = require('../channelRepository.js');
+var channelRepository = require('../channelrepository.js');
 var crypto = require('crypto');
 var jwt = require('jsonwebtoken');
 var config = require('../config.js');
