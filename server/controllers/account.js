@@ -39,15 +39,21 @@ function accountGet(req, res) {
         return res.send(403);
     }
 
-    var id = req.params.id || req.authObject.id;
+    var id = req.authObject.id;
 
     accountRepository.getById(id, function(result) {
         return res.json({
             cloak: result.cloak,
             email: result.email,
+            url: result.url,
             lastHost: result.last_host,
             lastQuitMessage: result.last_quit_message,
+            lastQuitTime: result.last_quit_time,
             lastRealname: result.last_realname,
+            enforce: result.flag_enforce,
+            secure: result.flag_secure,
+            cloakEnabled: result.flag_cloak_enabled,
+            private: result.flag_private,
             regTime: result.reg_time
         });
     });

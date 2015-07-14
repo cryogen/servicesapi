@@ -5,12 +5,12 @@
     <dd>{{ channel.description }}</dd>
     <dt>E-mail Address:</dt>
     <dd>{{ channel.email }}</dd>
-    <dt>Entry Message:</dt>
-    <dd>{{ channel.entryMessage }}</dd>
-    <dt>Mode Lock:</dt>
-    <dd>{{ channel.modeLock }}</dd>
-    <dt>topic:</dt>
-    <dd>{{ channel.topic }}</dd>
+    <dt ng-show="channel.entryMessage">Entry Message:</dt>
+    <dd ng-show="channel.entryMessage">{{ channel.entryMessage }}</dd>
+    <dt ng-show="channel.modeLock">Mode Lock:</dt>
+    <dd ng-show="channel.modeLock">{{ channel.modeLock }}</dd>
+    <dt ng-show="channel.topic">Topic:</dt>
+    <dd ng-show="channel.topic">{{ channel.topic }}</dd>
     <dt>Last Used:</dt>
     <dd>{{ channel.lastUsed * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</dd>
     <dt>Registered:</dt>

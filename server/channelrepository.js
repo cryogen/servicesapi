@@ -42,3 +42,19 @@ exports.getAccessList = function(name, callback) {
         callback(result);
     });
 };
+
+exports.isOnAccessList = function(name, account, callback) {
+    var query = 'SELECT 1 ' +
+                'FROM channel c ' +
+                'INNER JOIN channel_access ca ' +
+                'ON c.id = ca.channel_id ' +
+                'WHERE ca.account_id = $2 AND c.channel = $1';
+
+    database.query(query, [name, account], function(result) {
+        if(result.length === 0) {
+            return callback(false);
+        }
+
+        return callback(true);
+    });
+};

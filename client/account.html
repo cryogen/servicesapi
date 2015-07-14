@@ -1,14 +1,38 @@
-<dl class="dl-horizontal">
-    <dt>E-mail Address:</dt>
-    <dd>{{ account.email }}</dd>
-    <dt>Cloak:</dt>
-    <dd>{{ account.cloak }}</dd>
-    <dt>Last Host:</dt>
-    <dd>{{ account.lastHost }}</dd>
-    <dt>Last Quit Message:</dt>
-    <dd>{{ account.lastQuitMessage }}</dd>
-    <dt>Last Real Name:</dt>
-    <dd>{{ account.lastRealName }}</dd>
-    <dt>Registered:</dt>
-    <dd>{{ account.regTime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' }}</dd>
-</dl>
+<div class="col-xs-6 col-sm-12 col-md-6">
+    <dl class="dl-horizontal">
+        <dt>E-mail Address</dt>
+        <dd>{{ account.email }}</dd>
+        <dt ng-show="account.url">Url</dt>
+        <dd ng-show="account.url">{{ account.url }}</dd>
+        <dt ng-show="account.cloak">Cloak</dt>
+        <dd ng-show="account.cloak">{{ account.cloak }}</dd>
+        <dt ng-show="account.lastHost">Last Host</dt>
+        <dd ng-show="account.lastHost">{{ account.lastHost }}</dd>
+        <dt ng-show="account.lastQuitMessage">Last Quit Message</dt>
+        <dd ng-show="account.lastQuitMessage">{{ account.lastQuitMessage }}</dd>
+        <dt ng-show="account.lastRealName">Last Real Name</dt>
+        <dd ng-show="account.lastRealName">{{ account.lastRealName }}</dd>
+        <dt>Registered</dt>
+        <dd>{{ account.regTime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' }}</dd>
+        <dt>Cloak Enabled</dt>
+        <dd>
+            <span ng-show="account.cloakEnabled" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            <span ng-show="!account.cloakEnabled" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </dd>
+        <dt>Enforce</dt>
+        <dd>
+            <span ng-show="account.enforce" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            <span ng-show="!account.enforce" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </dd>
+        <dt>Private</dt>
+        <dd>
+            <span ng-show="account.private" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            <span ng-show="!account.private" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </dd>
+        <dt>Secure</dt>
+        <dd>
+            <span ng-show="account.secure" class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+            <span ng-show="!account.secure" class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </dd>
+    </dl>
+</div>

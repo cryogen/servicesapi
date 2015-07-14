@@ -6834,10 +6834,11 @@ body {
   background-color: #f8f8f8;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
-  padding: 8px 2px;
+  padding: 8px 4px;
 }
 .dl-horizontal dd {
   padding-top: 8px;
   margin-top: 0px;
   margin-bottom: 0px;
+  margin-left: 170px;
 }

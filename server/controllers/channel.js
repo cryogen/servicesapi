@@ -8,22 +8,39 @@ function channelGet(req, res) {
             return res.send(404);
         }
 
-        if((req.authObject && req.authObject.admin) || !result.flag_private) {
-            var channel = {
-                name: result.channel,
-                description: result.description,
-                topic: result.topic,
-                entryMessage: result.entrymsg,
-                modeLock: result.mlock,
-                regTime: result.reg_time,
-                email: result.email,
-                lastUsed: result.last_used
-            };
+        if(!req.authObject && result.flag_private) {
+            return res.send(404);
+        }
+
+        var channel = {
+            name: result.channel,
+            description: result.description,
+            regTime: result.reg_time,
+            email: result.email,
+            lastUsed: result.last_used
+        };
+
+        if(!req.authObject) {
+            return res.send(channel);
+        }
+
+        if(req.authObject.admin) {
+            channel.topic = result.topic;
+            channel.entryMessage = result.entrymsg;
+            channel.modeLock = result.mlock;
 
             return res.send(channel);
         }
 
-        return res.send(404);
+        channelRepository.isOnAccessList(req.params.name, req.authObject.id, function(isOn) {
+            if(isOn) {
+                channel.topic = result.topic;
+                channel.entryMessage = result.entrymsg;
+                channel.modeLock = result.mlock;
+            }
+
+            return res.send(channel);
+        });
     });
 }
 
