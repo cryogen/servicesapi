@@ -37,6 +37,11 @@ server.get('\/content/.*', restify.serveStatic({
     'default': 'index.html'
 }));
 
+server.get('\/fonts/.*', restify.serveStatic({
+    'directory': './client/content',
+    'default': 'index.html'
+}));
+
 server.get('\/scripts/.*', restify.serveStatic({
     'directory': './client',
     'default': 'index.html'
