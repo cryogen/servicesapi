@@ -3,7 +3,7 @@
 var channelRepository = require('../channelrepository.js');
 
 function channelGet(req, res) {
-    channelRepository.getByName(req.params.name, function(result) {
+    channelRepository.getByName('#' + req.params.name, function(result) {
         if(!result) {
             return res.send(404);
         }
@@ -45,7 +45,7 @@ function channelGet(req, res) {
 }
 
 function channelAccessList(req, res) {
-    channelRepository.getAccessList(req.params.name, function(result) {
+    channelRepository.getAccessList('#' + req.params.name, function(result) {
         if(!result) {
             return res.send(404);
         }

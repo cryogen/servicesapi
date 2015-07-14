@@ -23,19 +23,19 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
         controller: 'AccountLogoutController'
     })
     .when('/account/:id?/nicknames', {
-        templateUrl: 'nicknames.html',
+        templateUrl: 'account/nicknames.html',
         controller: 'AccountNicknamesController'
     })
     .when('/account/:id?/certificates', {
-        templateUrl: 'certificates.html',
+        templateUrl: 'account/certificates.html',
         controller: 'AccountCertificatesController'
     })
     .when('/account/:id?/channels', {
-        templateUrl: 'channels.html',
+        templateUrl: 'account/channels.html',
         controller: 'AccountChannelsController'
     })
     .when('/account/:id?', {
-        templateUrl: 'account.html',
+        templateUrl: 'account/index.html',
         controller: 'AccountIndexController'
     })
     .when('/nickname/', {

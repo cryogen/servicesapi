@@ -8,7 +8,7 @@ angular.module('services')
         var name = '';
 
         if($routeParams.name) {
-            name = window.encodeURIComponent($routeParams.name);
+            name = $routeParams.name;
         }
 
         $http.get('/api/channel/' + name + '/access').success(function(data) {

@@ -45,7 +45,8 @@ exports.getNicknames = function(id, callback) {
     var query = 'SELECT n.nick, n.reg_time, n.last_seen ' +
                 'FROM nickname n ' +
                 'INNER JOIN account a ON a.id = n.account_id ' +
-                'WHERE a.id = $1';
+                'WHERE a.id = $1 ' +
+                'ORDER BY n.nick';
 
     database.query(query, [id], function(result) {
         callback(result);

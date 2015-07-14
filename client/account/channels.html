@@ -7,7 +7,9 @@
     </thead>
     <tbody>
         <tr ng-repeat="channel in channels">
-            <td><a ng-href="/channel/{{ channel.channel | urlEncode }}">{{ channel.channel }}</a></td>
+            <td>
+                <a ng-href="/channel/{{ channel.channel | limitTo : channel.channel.length - 1 : 1 }}">{{ channel.channel }}</a>
+            </td>
             <td>{{ channel.level | chanaccess }}</td>
         </tr>
     </tbody>
