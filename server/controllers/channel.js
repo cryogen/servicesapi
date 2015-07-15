@@ -1,6 +1,7 @@
 'use strict';
 
 var channelRepository = require('../channelrepository.js');
+var restify = require('restify');
 
 function addPrivateProperties(channel, result) {
     channel.topic = result.topic;
@@ -10,14 +11,14 @@ function addPrivateProperties(channel, result) {
     return channel;
 }
 
-function channelGet(req, res) {
+function channelGet(req, res, next) {
     channelRepository.getByName('#' + req.params.name, function(result) {
         if(!result) {
-            return res.send(404);
+            return next(new restify.NotFoundError());
         }
 
         if(!req.authObject && result.flag_private) {
-            return res.send(404);
+            return next(new restify.NotFoundError());
         }
 
         var channel = {
@@ -40,13 +41,15 @@ function channelGet(req, res) {
         };
 
         if(!req.authObject) {
-            return res.send(channel);
+            res.send(channel);
+            return next();
         }
 
         if(req.authObject.admin) {
             channel = addPrivateProperties(channel, result);
 
-            return res.send(channel);
+            res.send(channel);
+            return next();
         }
 
         channelRepository.isOnAccessList(req.params.name, req.authObject.id, function(isOn) {
@@ -54,19 +57,21 @@ function channelGet(req, res) {
                 channel = addPrivateProperties(channel, result);
             }
 
-            return res.send(channel);
+            res.send(channel);
+            return next();
         });
     });
 }
 
-function channelAccessList(req, res) {
+function channelAccessList(req, res, next) {
     channelRepository.getAccessList('#' + req.params.name, function(result) {
         if(!result || !req.authObject) {
-            return res.send(404);
+            return next(new restify.NotFoundError());
         }
 
         if(req.authObject.admin) {
-            return res.send(result);
+            res.send(result);
+            return next();
         }
 
         channelRepository.isOnAccessList(req.params.name, req.authObject.id, function(isOn) {
@@ -74,19 +79,20 @@ function channelAccessList(req, res) {
                 res.send(result);
             }
 
-            return res.send(404);
+            return next(new restify.NotFoundError());
         });
     });
 }
 
-function channelAkickList(req, res) {
-    channelRepository.getList('#' + req.params.name, 0, function(result) {
+function queryResp(func, type, req, res, next) {
+    func('#' + req.params.name, type, function(result) {
         if(!result || !req.authObject) {
-            return res.send(404);
+            return next(new restify.NotFoundError());
         }
 
         if(req.authObject.admin) {
-            return res.send(result);
+            res.send(result);
+            return next();
         }
 
         channelRepository.isOnAccessList(req.params.name, req.authObject.id, function(isOn) {
@@ -94,67 +100,7 @@ function channelAkickList(req, res) {
                 res.send(result);
             }
 
-            return res.send(404);
-        });
-    });
-}
-
-function channelQuietList(req, res) {
-    channelRepository.getList('#' + req.params.name, 4, function(result) {
-        if(!result || !req.authObject) {
-            return res.send(404);
-        }
-
-        if(req.authObject.admin) {
-            return res.send(result);
-        }
-
-        channelRepository.isOnAccessList(req.params.name, req.authObject.id, function(isOn) {
-            if(isOn) {
-                res.send(result);
-            }
-
-            return res.send(404);
-        });
-    });
-}
-
-function channelInvexList(req, res) {
-    channelRepository.getList('#' + req.params.name, 2, function(result) {
-        if(!result || !req.authObject) {
-            return res.send(404);
-        }
-
-        if(req.authObject.admin) {
-            return res.send(result);
-        }
-
-        channelRepository.isOnAccessList(req.params.name, req.authObject.id, function(isOn) {
-            if(isOn) {
-                res.send(result);
-            }
-
-            return res.send(404);
-        });
-    });
-}
-
-function channelExceptList(req, res) {
-    channelRepository.getList('#' + req.params.name, 3, function(result) {
-        if(!result || !req.authObject) {
-            return res.send(404);
-        }
-
-        if(req.authObject.admin) {
-            return res.send(result);
-        }
-
-        channelRepository.isOnAccessList(req.params.name, req.authObject.id, function(isOn) {
-            if(isOn) {
-                res.send(result);
-            }
-
-            return res.send(404);
+            return next(new restify.NotFoundError());
         });
     });
 }
@@ -162,8 +108,8 @@ function channelExceptList(req, res) {
 module.exports.init = function(server) {
     server.get('/api/channel/:name', channelGet);
     server.get('/api/channel/:name/access', channelAccessList);
-    server.get('/api/channel/:name/akicks', channelAkickList);
-    server.get('/api/channel/:name/quiets', channelQuietList);
-    server.get('/api/channel/:name/invexes', channelInvexList);
-    server.get('/api/channel/:name/excepts', channelExceptList);
+    server.get('/api/channel/:name/akicks', queryResp.bind(server, channelRepository.getList, 0));
+    server.get('/api/channel/:name/quiets', queryResp.bind(server, channelRepository.getList, 4));
+    server.get('/api/channel/:name/invexes', queryResp.bind(server, channelRepository.getList, 2));
+    server.get('/api/channel/:name/excepts', queryResp.bind(server, channelRepository.getList, 3));
 };
