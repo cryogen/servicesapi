@@ -1,16 +1,18 @@
-<dl class="dl-horizontal col-sm-5" ng-show="loaded">
-    <dt>Nickname:</dt>
-    <dd>{{ nickname.nick }}</dd>
-    <dt ng-show="nickname.email">E-mail Address:</dt>
-    <dd ng-show="nickname.email">{{ nickname.email }}</dd>
-    <dt>Last Host:</dt>
-    <dd>{{ nickname.lastHost }}</dd>
-    <dt>Last Quit Time:</dt>
-    <dd>{{ nickname.lastQuitTime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</dd>
-    <dt>Last Quit Message:</dt>
-    <dd>{{ nickname.lastQuitMessage }}</dd>
-    <dt>Last Real Name:</dt>
-    <dd>{{ nickname.lastRealName }}</dd>
-    <dt>Registered:</dt>
-    <dd>{{ nickname.regTime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' }}</dd>
-</dl>
+<div class="col-xs-6 col-sm-12 col-md-10 col-lg-8">
+    <dl class="dl-horizontal" ng-show="loaded">
+        <dt>Nickname:</dt>
+        <dd>{{ nickname.nick }}</dd>
+        <dt ng-show="nickname.email">E-mail Address:</dt>
+        <dd ng-show="nickname.email">{{ nickname.email }}</dd>
+        <dt>Last Host:</dt>
+        <dd>{{ nickname.lastHost }}</dd>
+        <dt>Last Quit Time:</dt>
+        <dd>{{ nickname.lastQuitTime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</dd>
+        <dt>Last Quit Message:</dt>
+        <dd>{{ nickname.lastQuitMessage }}</dd>
+        <dt>Last Real Name:</dt>
+        <dd>{{ nickname.lastRealName }}</dd>
+        <dt>Registered:</dt>
+        <dd>{{ nickname.regTime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' }}</dd>
+    </dl>
+</div>

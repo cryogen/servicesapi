@@ -19,6 +19,7 @@
     <span class="error" ng-show="errorMessage">{{ errorMessage }}</span>
 </form>
 
+<div class="col-xs-6 col-sm-12 col-md-10 col-lg-8">
 <dl class="dl-horizontal" ng-show="loaded">
     <dt>Nickname:</dt>
     <dd>{{ nickname.nick }}</dd>
@@ -35,3 +36,4 @@
     <dt>Registered:</dt>
     <dd>{{ nickname.regTime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' }}</dd>
 </dl>
+</div>

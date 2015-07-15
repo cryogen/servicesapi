@@ -8,7 +8,7 @@ angular.module('services').factory('Channel', function($routeParams) {
             var name = '';
 
             if($routeParams.name) {
-                name = window.encodeURIComponent($routeParams.name);
+                name = $routeParams.name;
             }
 
             return [
@@ -19,6 +19,22 @@ angular.module('services').factory('Channel', function($routeParams) {
             {
                 name: 'Access List',
                 path: '/channel/' + name + '/access'
+            },
+            {
+                name: 'Auto Kick List',
+                path: '/channel/' + name + '/akicks'
+            },
+            {
+                name: 'Quiet List',
+                path: '/channel/' + name + '/quiets'
+            },
+            {
+                name: 'Invite Exception List',
+                path: '/channel/' + name + '/invexes'
+            },
+            {
+                name: 'Ban Exception List',
+                path: '/channel/' + name + '/excepts'
             }];
         }
     };

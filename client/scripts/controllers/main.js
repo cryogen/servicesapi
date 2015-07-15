@@ -53,6 +53,10 @@ servicesApp.config(function($routeProvider, $locationProvider, $httpProvider) {
     .when('/channel/:name/access', {
         templateUrl: 'channel/access.html',
         controller: 'ChannelAccessController'
+    })
+    .when('/channel/:name/:list', {
+        templateUrl: 'channel/lists.html',
+        controller: 'ChannelListsController'
     });
 
     $locationProvider.html5Mode(true);

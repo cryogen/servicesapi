@@ -58,3 +58,19 @@ exports.isOnAccessList = function(name, account, callback) {
         return callback(true);
     });
 };
+
+exports.getList = function(name, list, callback) {
+    var query = 'SELECT ns.nick setter, nt.nick target, ak.mask, ak.reason, ak.time, ak.duration, ak.chmode ' +
+                'FROM channel_akick ak ' +
+                'INNER JOIN account a ON ak.setter = a.id ' +
+                'LEFT OUTER JOIN account at ON ak.target = at.id ' +
+                'INNER JOIN nickname ns ON ns.id = a.primary_nick ' +
+                'LEFT OUTER JOIN nickname nt ON nt.id = at.primary_nick ' +
+                'INNER JOIN channel c ON c.id = ak.channel_id ' +
+                'WHERE c.channel = $1 AND ak.chmode = $2 ' +
+                'ORDER BY time DESC';
+
+    database.query(query, [name, list], function(result) {
+        callback(result);
+    });
+};

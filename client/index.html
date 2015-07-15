@@ -27,12 +27,12 @@
         <script src="/scripts/controllers/nickname/details.js"></script>
         <script src="/scripts/controllers/channel/details.js"></script>
         <script src="/scripts/controllers/channel/access.js"></script>
+        <script src="/scripts/controllers/channel/lists.js"></script>
 
         <base href="/">
     </head>
     <body role="document" ng-controller="MainController">
         <nav class="navbar navbar-default navbar-fixed-top">
-            <div class="container">
                 <div class="navbar-header">
                     <button type="button"
                             class="navbar-toggle collapsed"
@@ -64,7 +64,6 @@
                         <li ng-show="loggedIn"><a href="/account/logout">Logout</a></li>
                     </ul>
                 </div>
-            </div>
         </nav>
         <div class="container-fluid">
             <div class="row">

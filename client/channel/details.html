@@ -1,18 +1,64 @@
-<dl class="dl-horizontal" ng-show="loaded">
-    <dt>Channel:</dt>
-    <dd>{{ channel.name }}</dd>
-    <dt>Description:</dt>
-    <dd>{{ channel.description }}</dd>
-    <dt>E-mail Address:</dt>
-    <dd>{{ channel.email }}</dd>
-    <dt ng-show="channel.entryMessage">Entry Message:</dt>
-    <dd ng-show="channel.entryMessage">{{ channel.entryMessage }}</dd>
-    <dt ng-show="channel.modeLock">Mode Lock:</dt>
-    <dd ng-show="channel.modeLock">{{ channel.modeLock }}</dd>
-    <dt ng-show="channel.topic">Topic:</dt>
-    <dd ng-show="channel.topic">{{ channel.topic }}</dd>
-    <dt>Last Used:</dt>
-    <dd>{{ channel.lastUsed * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</dd>
-    <dt>Registered:</dt>
-    <dd>{{ channel.regTime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' }}</dd>
-</dl>
+<div class="col-xs-6 col-sm-12 col-md-10 col-lg-8">
+    <dl class="dl-horizontal" ng-show="loaded">
+        <dt>Channel</dt>
+        <dd>{{ channel.name }}</dd>
+        <dt>Description</dt>
+        <dd>{{ channel.description }}</dd>
+        <dt ng-show="channel.email">E-mail Address</dt>
+        <dd ng-show="channel.email">{{ channel.email }}</dd>
+        <dt ng-show="channel.entryMessage">Entry Message</dt>
+        <dd ng-show="channel.entryMessage">{{ channel.entryMessage }}</dd>
+        <dt ng-show="channel.modeLock">Mode Lock</dt>
+        <dd ng-show="channel.modeLock">{{ channel.modeLock }}</dd>
+        <dt ng-show="channel.topic">Topic</dt>
+        <dd ng-show="channel.topic">{{ channel.topic }}</dd>
+        <dt>Last Used</dt>
+        <dd>{{ channel.lastUsed * 1000 | date:'yyyy-MM-dd HH:mm:ss Z'}}</dd>
+        <dt>Registered</dt>
+        <dd>{{ channel.regTime * 1000 | date:'yyyy-MM-dd HH:mm:ss Z' }}</dd>
+        <dt>Auto Limit</dt>
+        <dd>
+            <span ng-class="{ 'glyphicon glyphicon-ok text-success': channel.autoLimit, 'glyphicon glyphicon-remove text-danger': !channel.autoLimit }" aria-hidden="true"></span>
+        </dd>
+        <dt>Auto Op</dt>
+        <dd>
+            <span ng-class="{ 'glyphicon glyphicon-ok text-success': channel.autoOp, 'glyphicon glyphicon-remove text-danger': !channel.autoOp }" aria-hidden="true"></span>
+        </dd>
+        <dt>Auto Save</dt>
+        <dd>
+            <span ng-class="{ 'glyphicon glyphicon-ok text-success': channel.autoSave, 'glyphicon glyphicon-remove text-danger': !channel.autoSave }" aria-hidden="true"></span>
+        </dd>
+        <dt>Auto Voice</dt>
+        <dd>
+            <span ng-class="{ 'glyphicon glyphicon-ok text-success': channel.autoVoice, 'glyphicon glyphicon-remove text-danger': !channel.autoVoice }" aria-hidden="true"></span>
+        </dd>
+        <dt>Expire Bans</dt>
+        <dd>
+            <span ng-class="{ 'glyphicon glyphicon-ok text-success': channel.expireBans, 'glyphicon glyphicon-remove text-danger': !channel.expireBans }" aria-hidden="true"></span>
+        </dd>
+        <dt>FloodServ</dt>
+        <dd>
+            <span ng-class="{ 'glyphicon glyphicon-ok text-success': channel.floodserv, 'glyphicon glyphicon-remove text-danger': !channel.floodserv }" aria-hidden="true"></span>
+        </dd>
+        <dt>Leave Ops</dt>
+        <dd>
+            <span ng-class="{ 'glyphicon glyphicon-ok text-success': channel.leaveOps, 'glyphicon glyphicon-remove text-danger': !channel.leaveOps }" aria-hidden="true"></span>
+        </dd>
+        <dt>Private</dt>
+        <dd>
+            <span ng-class="{ 'glyphicon glyphicon-ok text-success': channel.private, 'glyphicon glyphicon-remove text-danger': !channel.private }" aria-hidden="true"></span>
+        </dd>
+        <dt>Restricted</dt>
+        <dd>
+            <span ng-class="{ 'glyphicon glyphicon-ok text-success': channel.restricted, 'glyphicon glyphicon-remove text-danger': !channel.restricted }" aria-hidden="true"></span>
+        </dd>
+        <dt>Topic Lock</dt>
+        <dd>
+            <span ng-class="{ 'glyphicon glyphicon-ok text-success': channel.topicLock, 'glyphicon glyphicon-remove text-danger': !channel.topicLock }" aria-hidden="true"></span>
+        </dd>
+        <dt>Verbose</dt>
+        <dd>
+            <span ng-class="{ 'glyphicon glyphicon-ok text-success': channel.verbose, 'glyphicon glyphicon-remove text-danger': !channel.verbose }" aria-hidden="true"></span>
+        </dd>
+    </dl>
+</div>
