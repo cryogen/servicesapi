@@ -28,6 +28,7 @@ function logRequests(req, res, next) {
 server.use(logRequests);
 
 server.use(restify.bodyParser());
+server.use(restify.authorizationParser());
 server.use(middleware.checkAuthorised);
 
 controllers.init(server);
