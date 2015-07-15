@@ -14,10 +14,10 @@ angular.module('services')
         $http.get('/api/channel/' + name).success(function(data) {
             $scope.channel = data;
             $scope.loaded = true;
+
+            $scope.$emit('sidebarmenu', $scope.loaded ? Channel.getMenu() : []);
         });
     };
 
     $scope.getChannel();
-
-    $scope.$emit('sidebarmenu', Channel.getMenu());
 });
