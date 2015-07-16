@@ -1,11 +1,12 @@
 'use strict';
 
 var nicknameRepository = require('../nicknamerepository.js');
+var restify = require('restify');
 
-function nicknameGet(req, res) {
+function nicknameGet(req, res, next) {
     nicknameRepository.getByName(req.params.name, function(result) {
         if(!result) {
-            return res.send(404);
+            return next(new restify.NotFoundError());
         }
 
         if((req.authObject && req.authObject.admin) || !result.flag_private) {
@@ -19,10 +20,11 @@ function nicknameGet(req, res) {
                 email: result.email
             };
 
-            return res.send(nick);
+            res.json(nick);
+            return next();
         }
 
-        return res.send(404);
+        return next(new restify.NotFoundError());
     });
 }
 

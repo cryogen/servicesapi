@@ -3,6 +3,11 @@
 var channelRepository = require('../channelrepository.js');
 var restify = require('restify');
 
+var AKICK_LIST = 0;
+var INVEX_LIST = 2;
+var EXCEPT_LIST = 3;
+var QUIET_LIST = 4;
+
 function addPrivateProperties(channel, result) {
     channel.topic = result.topic;
     channel.entryMessage = result.entrymsg;
@@ -41,14 +46,14 @@ function channelGet(req, res, next) {
         };
 
         if(!req.authObject) {
-            res.send(channel);
+            res.json(channel);
             return next();
         }
 
         if(req.authObject.admin) {
             channel = addPrivateProperties(channel, result);
 
-            res.send(channel);
+            res.json(channel);
             return next();
         }
 
@@ -57,7 +62,7 @@ function channelGet(req, res, next) {
                 channel = addPrivateProperties(channel, result);
             }
 
-            res.send(channel);
+            res.json(channel);
             return next();
         });
     });
@@ -70,13 +75,13 @@ function channelAccessList(req, res, next) {
         }
 
         if(req.authObject.admin) {
-            res.send(result);
+            res.json(result);
             return next();
         }
 
         channelRepository.isOnAccessList(req.params.name, req.authObject.id, function(isOn) {
             if(isOn) {
-                res.send(result);
+                res.json(result);
             }
 
             return next(new restify.NotFoundError());
@@ -91,13 +96,13 @@ function queryResp(func, type, req, res, next) {
         }
 
         if(req.authObject.admin) {
-            res.send(result);
+            res.json(result);
             return next();
         }
 
         channelRepository.isOnAccessList(req.params.name, req.authObject.id, function(isOn) {
             if(isOn) {
-                res.send(result);
+                res.json(result);
             }
 
             return next(new restify.NotFoundError());
@@ -108,8 +113,8 @@ function queryResp(func, type, req, res, next) {
 module.exports.init = function(server) {
     server.get('/api/channel/:name', channelGet);
     server.get('/api/channel/:name/access', channelAccessList);
-    server.get('/api/channel/:name/akicks', queryResp.bind(server, channelRepository.getList, 0));
-    server.get('/api/channel/:name/quiets', queryResp.bind(server, channelRepository.getList, 4));
-    server.get('/api/channel/:name/invexes', queryResp.bind(server, channelRepository.getList, 2));
-    server.get('/api/channel/:name/excepts', queryResp.bind(server, channelRepository.getList, 3));
+    server.get('/api/channel/:name/akicks', queryResp.bind(server, channelRepository.getList, AKICK_LIST));
+    server.get('/api/channel/:name/quiets', queryResp.bind(server, channelRepository.getList, QUIET_LIST));
+    server.get('/api/channel/:name/invexes', queryResp.bind(server, channelRepository.getList, INVEX_LIST));
+    server.get('/api/channel/:name/excepts', queryResp.bind(server, channelRepository.getList, EXCEPT_LIST));
 };

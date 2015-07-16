@@ -7,10 +7,11 @@ var jwt = require('jsonwebtoken');
 var config = require('../config.js');
 var middleware = require('../middleware.js');
 
-function accountLogin(req, res) {
+function accountLogin(req, res, next) {
     accountRepository.getByNick(req.body.nickname, function(result) {
         if(!result) {
-            return res.json({ error: 'Invalid username or password' });
+            res.json({ error: 'Invalid username or password' });
+            return next();
         }
 
         var shasum = crypto.createHash('sha1');
@@ -18,7 +19,8 @@ function accountLogin(req, res) {
         var hash = shasum.digest('hex').toUpperCase();
 
         if(hash !== result.password.toUpperCase()) {
-            return res.json({ error: 'Invalid username or password' });
+            res.json({ error: 'Invalid username or password' });
+            return next();
         }
 
         var nickname = {
@@ -30,19 +32,16 @@ function accountLogin(req, res) {
 
         nickname.token = jwt.sign(nickname, config.tokenSecret);
 
-        return res.json(nickname);
+        res.json(nickname);
+        return next();
     });
 }
 
-function accountGet(req, res) {
-    if(!req.authObject) {
-        return res.send(403);
-    }
-
+function accountGet(req, res, next) {
     var id = req.authObject.id;
 
     accountRepository.getById(id, function(result) {
-        return res.json({
+        res.json({
             cloak: result.cloak,
             email: result.email,
             url: result.url,
@@ -56,36 +55,28 @@ function accountGet(req, res) {
             private: result.flag_private,
             regTime: result.reg_time
         });
+        return next();
     });
 }
 
-function accountNicknames(req, res) {
-    if(!req.authObject) {
-        return res.send(403);
-    }
-
+function accountNicknames(req, res, next) {
     accountRepository.getNicknames(req.authObject.id, function(result) {
-        return res.json(result);
+        res.json(result);
+        next();
     });
 }
 
-function accountCertificates(req, res) {
-    if(!req.authObject) {
-        return res.send(403);
-    }
-
+function accountCertificates(req, res, next) {
     accountRepository.getCertificates(req.authObject.id, function(result) {
-        return res.json(result);
+        res.json(result);
+        next();
     });
 }
 
-function accountChannels(req, res) {
-    if(!req.authObject) {
-        return res.send(403);
-    }
-
+function accountChannels(req, res, next) {
     channelRepository.getChannelsForAccount(req.authObject.id, function(result) {
-        return res.send(result);
+        res.json(result);
+        next();
     });
 }
 
